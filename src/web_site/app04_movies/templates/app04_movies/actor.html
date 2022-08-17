@@ -1,0 +1,79 @@
+{%  extends 'app04_movies/base.html' %}
+{% load static %}
+            {% block title %} {{ actor.title }} {% endblock title %}  {# Так во вкладке будет название фильма #}
+
+            {% block conteiner %}  {# класс этого блока нужно тут менять от исходного в base потому что sidebar смещается #}
+                <div class="container py-md-3">
+            {% endblock conteiner %}
+
+            {% block sidebar %}
+                <div class="side-bar col-lg-4"> {# Див сайдбара вынесли сюда, чтоб менять его размер тут на 4 #}
+            {% endblock sidebar %}
+
+{% block movie %}
+
+<div class="left-ads-display col-lg-8">
+    <div class="row">
+        <div class="desc1-left col-md-6">
+            <img src="{{ actor.image.url }}" class="img-fluid" alt="">
+        </div>
+        <div class="desc1-right col-md-6 pl-lg-4">
+            <h3 class="editContent">
+                {{ movie.title }}
+            </h3>
+            <h5 class="editContent">
+
+            </h5>
+            <ul>
+                <li>
+                    <span>
+                        <b>
+                            Возраст:
+                        </b>
+                        {{ actor.age }} лет
+                    </span>
+                </li>
+                <li>
+                    <span>
+                        <b>
+                            Режиссер:
+                        </b>
+
+{# Для того чтобы отобразить в каких фильмах режисёр или актёр нужно использовать related_name из модели Movie #}
+{# Чтобы сослаться на таблицу MtM это film_actor и film_director #}
+
+                        {% for movie in actor.film_director.all %}
+                            {{ movie.title }}
+                        {% endfor %}
+
+                    </span>
+                </li>
+                <li>
+                    <span>
+                        <b>Актер:</b>
+
+                        {% for movie in actor.film_actor.all %}
+                            {{ movie.title }}
+                        {% endfor %}
+
+                    </span>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="row sub-para-w3layouts mt-5">
+        <h3 class="shop-sing editContent">
+            О {{ actor.name }}
+        </h3>
+
+        <p class="editContent">
+
+        {# Фильтр safe чтоб теги html от текстового редактора ckeditor рендерились, а не выводились как текст #}
+            {{ actor.description|safe }}
+        </p>
+
+    </div>
+</div>
+
+{% endblock movie %}

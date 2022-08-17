@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    {% load static recaptcha3 %}
+    <!-- //Meta tag Keywords -->
+    <title>{% block title %} {% endblock title %}</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- //Meta tag Keywords -->
+    <!-- Custom-Files -->
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+    <!-- Bootstrap-Core-CSS -->
+    <!--/ Style-CSS -->
+    <link rel="stylesheet" href="{% static 'css/style_movie.css' %}" type="text/css" media="all">
+    <!--// Style-CSS -->
+    <!-- font-awesome-icons -->
+    <link href="{% static 'css/font-awesome.css' %}" rel="stylesheet">
+    <!-- //font-awesome-icons -->
+    <!-- /Fonts -->
+    <link href="//fonts.googleapis.com/css?family=Lato:100,100i,300,300i,400,400i,700" rel="stylesheet">
+    <link href="//fonts.googleapis.com/css?family=Source+Sans+Pro:200,200i,300,300i,400,400i,600,600i,700,700i,900" rel="stylesheet">
+    <!-- //Fonts -->
+    {% recaptcha_init %}
+    {% recaptcha_ready action_name='homepage' %}
+</head>
+<body>
+
+    <div id="page" class="page"> <!-- mian-content -->
+
+        {# Выносим сюда див хедера чтоб менять класс и отображать разный банер на назных страницах #}
+        {# Класс bg1 вытащили и поместили в movie_list #}
+        <div class="main-banner bg {% block header %} {# bg1 #} {% endblock header %}" id="home">
+            {% include 'include/header.html' %}
+        </div>
+
+        <!-- Хлебные крошки -->
+        <ol class="breadcrumb editContent">
+        <li class="breadcrumb-item">
+            <a href="index.html" class="editContent">Home</a>
+        </li>
+        <li class="breadcrumb-item active editContent">Single Page</li>
+        </ol>
+        <!-- /Хлебные крошки/ -->
+
+        {% block content %}
+        {% endblock %}
+        {% include 'include/footer.html' %}
+
+    </div>
+<script src="{% static 'js/scripts.js' %}"></script>
+{# Библиотека hogan это шаблонизатор на js #}
+<script src="http://twitter.github.io/hogan.js/builds/3.0.1/hogan-3.0.1.js"></script>
+</body>
+</html>

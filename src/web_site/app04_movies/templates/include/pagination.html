@@ -1,0 +1,51 @@
+{# Добавлены стили в раздел пагинации в style_movie.CSS #}
+{# Вариант без подставления ссылок для фильтров есть в начале https://www.youtube.com/watch?v=UJa9m5aRM_A&list=PLF-NY6ldwAWrb6nQcPL21XX_-AmivFAYq&index=23 #}
+{# https://django.fun/docs/django/ru/3.2/topics/pagination/ #}
+
+<ul class="pagination">
+    {% if page_obj.has_previous %}
+        {# Если у номера страницы отнять 3 и это будет больше 1 #}
+        {% if page_obj.number|add:'-3' > 1 %}
+            {# Тогда выводим страницу номер 1 #}
+            <li class="pagination__item">
+                <a class="pagination__link" href="?{{ search }}{{ genre }}{{ year }}page=1">1</a>
+            </li>
+        {% endif %}
+        {% if page_obj.number|add:'-3' >= 3 %}
+            <li class="pagination__item pagination__item--dots">
+                    <a href="?{{ search }}{{ genre }}{{ year }}page={{ page_obj.previous_page_number|add:'-3' }}">
+                <span class="pagination__link">• • •</span>
+                </a>
+            </li>
+        {% endif %}
+    {% endif %}
+    {% if paginator.page_range|length > 1 %}
+        {% for i in paginator.page_range %}
+            {% if page_obj.number == i %}
+                <li class="pagination__item active">
+                    <a class="pagination__link" href="#">{{ i }}</a>
+                </li>
+            {% elif i > page_obj.number|add:'-4' and i < page_obj.number|add:'4' %}
+                <li class="pagination__item">
+                        <a class="pagination__link" href="?{{ search }}{{ genre }}{{ year }}page={{ i }}">{{ i }}</a>
+                </li>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+    {% if page_obj.has_next %}
+        {% if page_obj.number|add:'4' < page_obj.paginator.num_pages %}
+            <li class="pagination__item pagination__item--dots">
+                    <a href="?{{ search }}{{ genre }}{{ year }}page={{ page_obj.next_page_number|add:'3' }}">
+                <span class="pagination__link">• • •</span>
+                </a>
+            </li>
+        {% endif %}
+        {% if page_obj.number|add:'3' < page_obj.paginator.num_pages %}
+            <li class="pagination__item">
+                    <a class="pagination__link" href="?{{ search }}{{ genre }}{{ year }}page={{ page_obj.paginator.num_pages }}">
+                        {{ page_obj.paginator.num_pages }}
+                    </a>
+            </li>
+        {% endif %}
+    {% endif %}
+</ul>
