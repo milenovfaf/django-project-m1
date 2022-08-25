@@ -84,21 +84,17 @@ class Movie(models.Model):
         verbose_name="Категория",
         on_delete=models.SET_NULL,
         null=True
-    )  # Если удалить поле станет NULL и True указываем что поле может быть null
+    )
 
     url = models.SlugField(max_length=130, unique=True)
-    draft = models.BooleanField("Черновик", default=False)  # Черновик
+    draft = models.BooleanField("Черновик", default=False)
 
     def __str__(self):
         return self.title
 
     def get_absolute_url(self):
-        # Указываем имя и параметры в словаре, которые передаём в url
         return reverse("movie-detail", kwargs={"slug": self.url})
 
-    """ Метод get_review возвращает список отзывов прикреплённых к фильму, 
-    фильтрует так где поле parent будет равно null, таким образум вернутся
-    только родительские отзывы к нашему фильму"""
     def get_review(self):
         return self.reviews_set.filter(parent__isnull=True)
 

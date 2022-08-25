@@ -1,0 +1,60 @@
+/*body {*/
+/*    font-family: 'Montserrat', sans-serif;*/
+
+/*    font-size: 16px;*/
+/*    color: #333;*/
+/*    line-height: 1.6;   !* межстрочный отступ *!*/
+/*}*/
+/**,*/
+/**:before,*/
+/**:after*/
+/*{*/
+/*    box-sizing: border-box;*/
+/*}*/
+
+/*.container {*/
+/*    width: 100%;*/
+/*    max-width: 1680px;*/
+/*    margin: 0 auto;        !* выравниваем по центру *!*/
+
+/*}*/
+
+
+
+
+
+
+/* После внесения каких либо изменений необходимо в терминале ввести
+"python manage.py collectstatic"
+чтобы всё это переползно в папку static и применилось */
+
+
+body{
+    margin-top: 20px;
+    background-color:#e9ebee;
+}
+
+
+.hover:hover {
+    border: 3px solid #b8d455;
+}
+
+
+.product {
+    border: 3px solid #e1e1e1;
+    padding: 5px 5px;
+
+}
+
+.img_correct {
+        display: block;
+    margin-left: auto;
+    margin-right: auto
+}
+
+.text_product {
+    margin-left: 25px;
+    margin-top: 10px;
+}
+
+
