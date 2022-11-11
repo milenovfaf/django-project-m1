@@ -99,14 +99,30 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'debug_toolbar',
     'django.contrib.sites',
     'django.contrib.flatpages',
 
     'app04_movies',
+    'app05_contact',
 
     'ckeditor_uploader',
     'ckeditor',
     'snowpenguin.django.recaptcha3',
+    ''
+    
+
+    'allauth',
+    'allauth.account',
+    # 'allauth.socialaccount',
+    # 'allauth.socialaccount.providers.vk',
+]
+
+# для debug_toolbar
+INTERNAL_IPS = [
+    '127.0.0.1',
+    'localhost',
+    '[::1]',
 ]
 
 MIDDLEWARE = [
@@ -117,14 +133,15 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
 WSGI_APPLICATION = 'web_site.wsgi.application'
 ROOT_URLCONF = 'web_site.urls'
 
 
-
-'''Ошибка TemplateDoesNotExist - отсуствует такой шаблон, джанга может может не 
+'''Ошибка TemplateDoesNotExist - отсуствует такой шаблон, джанга может не 
 найти шаблоны если список 'DIRS' пуской
 BASE_DIR - переменная содержит полный путь к корню проекта, 
 templates - деррикторя с шаблонами.
@@ -134,8 +151,8 @@ APP_DIRS - сообщает стоит ли искать наши шаблоны
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],  # [os.path.join(BASE_DIR, 'templates'],
-        # 'APP_DIRS': True,
+        'DIRS': [os.path.join(BASE_DIR, 'templates'), ],  # [os.path.join(BASE_DIR, 'templates')],
+        'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
@@ -143,15 +160,15 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
-            'loaders': [
-                # django.core.exceptions.ImproperlyConfigured:
-                # app_dirs must not be set when loaders is defined.
-                # https://stackoverflow.com/questions/10386257/tell-django-to-search-apps-template-subfolders
-                'django.template.loaders.filesystem.Loader',
-                'django.template.loaders.app_directories.Loader',
-                # https://django-admin-tools.readthedocs.io/en/latest/quickstart.html#configuration
-                # https://docs.djangoproject.com/en/1.8/ref/templates/upgrading/
-            ],
+            # 'loaders': [
+            #     # django.core.exceptions.ImproperlyConfigured:
+            #     # app_dirs must not be set when loaders is defined.
+            #     # https://stackoverflow.com/questions/10386257/tell-django-to-search-apps-template-subfolders
+            #     'django.template.loaders.filesystem.Loader',
+            #     'django.template.loaders.app_directories.Loader',
+            #     # https://django-admin-tools.readthedocs.io/en/latest/quickstart.html#configuration
+            #     # https://docs.djangoproject.com/en/1.8/ref/templates/upgrading/
+            # ],
         },
     },
 ]
@@ -171,6 +188,10 @@ DATABASES = {
     }
 }
 
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+)
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
@@ -218,6 +239,7 @@ DATETIME_FORMAT = 'Y-m-d H:i O'
 ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 1
 ACCOUNT_USERNAME_MIN_LENGTH = 4
 LOGIN_REDIRECT_URL = '/'
+EMAIL_BACKEND = 'django.core.mail.backends.dummy.EmailBackend'
 # ------------------------------------------------------------------------------
 CKEDITOR_UPLOAD_PATH = "uploads/"
 

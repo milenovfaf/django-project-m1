@@ -18,9 +18,11 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/',                  admin.site.urls),
+    path('accounts/',               include('allauth.urls')),
     path('ckeditor/',               include('ckeditor_uploader.urls')),
     path('pages/',                  include('django.contrib.flatpages.urls')),
-
+    path('contact/',                include('app05_contact.urls')),
     path('',                        include('app04_movies.urls')),
+    path('__debug__/',             include('debug_toolbar.urls')),
 ]
 

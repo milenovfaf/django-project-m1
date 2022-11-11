@@ -5,21 +5,20 @@
         <!-- nav -->
         <nav class="py-4">
             <div id="logo">
-                <h1> <a href="index.html" class="editContent" style="outline: none; outline-offset: -2px; cursor: inherit; color: rgb(255, 255, 255); font-size: 40px; background-color: rgba(0, 0, 0, 0); font-family: &quot;Source Sans Pro&quot;, sans-serif;">DjangoMovie</a></h1>
+                <h1> <a href="index.html" class="editContent" style="outline: none; outline-offset: -2px; cursor: inherit; color: rgb(255, 255, 255); font-size: 40px; background-color: rgba(0, 0, 0, 0); font-family: &quot;Source Sans Pro&quot;, sans-serif;"></a></h1>
             </div>
 
             <label for="drop" class="toggle">Menu</label>
             <input type="checkbox" id="drop">
             <ul class="menu mt-2">
-                <li class="active"><a href="/">Главная</a></li>
+                <li class="active"><a href="/">Home</a></li>
                 <li>
                     <!-- First Tier Drop Down -->
-                    <label for="drop-2" class="toggle">Категории <span class="fa fa-angle-down" aria-hidden="true" ></span> </label>
-                    <a href="#">Категории <span class="fa fa-angle-down" aria-hidden="true"></span></a>
+                    <label for="drop-2" class="toggle">Categories<span class="fa fa-angle-down" aria-hidden="true" ></span> </label>
+                    <a href="#">Categories <span class="fa fa-angle-down" aria-hidden="true"></span></a>
                     <input type="checkbox" id="drop-2">
 
                     <ul>
-                    <!-- Пропускаем переменную categories через теплейт тэг и потом через for выводим-->
                         {% get_categories as categories %}
                         {% for category in categories %}
                         <li><a href="/">{{ category.name }}</a></li>
@@ -35,16 +34,16 @@
                         </span>
                         <a href="{% url 'account_logout' %}"
                            style="color: rgb(255, 255, 255); font-weight: 700; text-transform: uppercase;">
-                            Выход
+                            Log Out
                         </a>
                     {% else %}
                          <a href="{% url 'account_login' %}"
                            style="color: rgb(255, 255, 255); font-weight: 700; text-transform: uppercase;">
-                            Вход
+                            Log In
                         </a>
                         <a href="{% url 'account_signup' %}"
                            style="color: rgb(255, 255, 255); font-weight: 700; text-transform: uppercase;">
-                            Регистрация
+                            Sign Up
                         </a>
                     {% endif %}
 
@@ -57,8 +56,8 @@
 <!-- //header -->
 <!--/banner-->
 <div class="banner-info">
-    <p class="editContent" >лучший сайт на django 3</p>
-    <h3 class="mb-4 editContent">Все о кино</h3>
+    <p class="editContent" >Website on django 3</p>
+    <h3 class="mb-4 editContent">TV Series</h3>
     <div class="ban-buttons">
     </div>
 </div>

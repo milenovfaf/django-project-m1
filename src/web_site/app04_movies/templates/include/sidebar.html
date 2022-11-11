@@ -1,9 +1,9 @@
 {% load movie_tag %}
 
 <div class="search-bar w3layouts-newsletter">
-    <h3 class="sear-head editContent" >Поиск фильма</h3>
+    <h3 class="sear-head editContent" >Search</h3>
     <form action="{% url 'search-link' %}" method="get" class="d-flex editContent" >
-        <input type="search" placeholder="Введите название..." name="search" class="form-control" required="">
+        <input type="search" placeholder="Enter a name..." name="search" class="form-control" required="">
         <button type="submit" class="btn1 btn" ><span class="fa fa-search" aria-hidden="true" ></span></button>
     </form>
 </div>
@@ -15,7 +15,7 @@
 {# Для добавления json изменили url и присвоил форме name="filter" #}
 <form id="form_id" action="{% url 'filter-link' %}" method="get" name="filter">
     <div class="left-side my-4">
-        <h3 class="sear-head editContent" >Жанры</h3>
+        <h3 class="sear-head editContent" >Genre</h3>
         <ul class="w3layouts-box-list">
 
     {# Тут мы обращаемся к наследованному классу GenreYear и его функции get_genres вытаскиваем жанры #}
@@ -35,7 +35,7 @@
 <!-- discounts -->
 
     <div class="left-side">
-        <h3 class="sear-head editContent" >Год</h3>
+        <h3 class="sear-head editContent" >Year</h3>
         <ul class="w3layouts-box-list">
 
 {# Мы использовали .value в классе GenreYear просто для примера его существования #}
@@ -56,7 +56,8 @@
         </ul>
     </div>
 
-    <button id="sub_btn" type="submit">Найти</button>
+{#    <button id="sub_btn" type="submit">Найти</button>#}
+    <button id="sub_btn" type="submit" class="mt-3 btn btn-success btn-block py-3">Search</button>
 
 </form>
 <!-- //discounts -->
@@ -65,7 +66,7 @@
 
 <!-- reviews -->
 <div class="customer-rev left-side my-4">
-    <h3 class="sear-head editContent" >Рейтинг</h3>
+    <h3 class="sear-head editContent" >Rating</h3>
     <ul class="w3layouts-box-list">
         <li>
             <a href="#">
@@ -119,7 +120,6 @@
         </li>
     </ul>
 </div>
-{# Можно передать аргумент в теплэйт тэг наример count=3 и он подставится в срез списка #}
 {% get_last_movies count=3 %}
 
 

@@ -1,6 +1,6 @@
 {%  extends 'app04_movies/base.html' %}
 {% load static %}
-            {% block title %} {{ movie.title }} {% endblock title %}  {# Так во вкладке будет название фильма #}
+            {% block title %} {{ movie.title }} {% endblock title %}  {# Название фильма во вкладке #}
 
             {% block conteiner %}  {# класс этого блока нужно тут менять от исходного в base потому что sidebar смещается #}
                 <div class="container py-md-3">
@@ -14,91 +14,82 @@
 
 <div class="left-ads-display col-lg-8">
     <div class="row">
-        <div class="desc1-left col-md-6">
+        <div class="col-md-6">
             <img src="{{ movie.poster.url }}" class="img-fluid" alt="">
         </div>
         <div class="desc1-right col-md-6 pl-lg-4">
-            <h3 class="editContent">
-                {{ movie.title }}
-            </h3>
+
+        <h3 class="shop-sing editContent" style="outline: none; cursor: inherit;">
+            {{ movie.title }}
+        </h3>
+
             <h5 class="editContent"></h5>
             <ul>
                 <li>
                     <span>
-                        <b>Год:</b> {{ movie.year }}
+                        <b>Year:</b> {{ movie.year }}
                     </span>
                 </li>
                 <li>
                     <span>
-                        <b>Страна:</b> {{ movie.country }}
+                        <b>Country:</b> {{ movie.country }}
                     </span>
                 </li>
                 <li>
                     <span>
-                        <b>Слоган:</b> {{ movie.tagline }}
-                    </span>
-                </li>
-
-                <li>
-                    <span>
-                        <b>Режиссер:</b>
-
-{#          Так как таблица ManyToMany проходится по списку и выводим поле name #}
+                        <b>Directors:</b>
                     {% for director in movie.directors.all %}
-{#                        <a href="{% url 'actor-detail' director.name %}">#}
                         <a href="{{ director.get_absolute_url }}">
                             {{ director.name }}
                         </a>
+                        {% if not forloop.last %}
+                            <b>, </b>
+                        {% endif %}
                     {% endfor %}
-
                     </span>
                 </li>
                 <li>
                     <span>
-                        <b>Актеры:</b>
-
+                        <b>Actors:</b>
                     {% for actor in movie.actors.all %}
                         <a href="{{ actor.get_absolute_url }}">
                         {{ actor.name }}
                         </a>
+                        {% if not forloop.last %}
+                            <b>, </b>
+                        {% endif %}
                     {% endfor %}
-
                     </span>
                 </li>
-
                 <li>
                     <span>
-                        <b>Жанр:</b>
-
+                        <b>Genre:</b>
                     {% for genre in movie.genres.all %}
                         {{ genre.name }}
-                        {% endfor %}
-
+                        {% if not forloop.last %}
+                            <b>, </b>
+                        {% endif %}
+                    {% endfor %}
                 </span>
                 </li>
-                <li style="list-style: none"><span><b>Премьера в мире:</b> {{ movie.world_premiere }}</span>
+                <li style="list-style: none">
+                    <span><b>Premiere:</b> {{ movie.world_premiere }}</span>
                 </li>
                 <li style="list-style: none">
-                    <span><b>Бюджет:</b> {{ movie.budget }}</span></li>
+                    <span><b>Seasons:</b> {{ movie.seasons }}</span></li>
                 <li style="list-style: none">
-                    <span><b>Сборы в США:</b> {{ movie.fees_in_usa }}</span></li>
-                <li style="list-style: none"><span><b>Сборы в мире:</b> {{ movie.fess_in_world }}</span>
+                    <span><b>Series:</b> {{ movie.series }}</span>
                 </li>
-
-
                 <li>
                     <form action="{% url 'add-rating' %}" method="post" name="rating">
                         {% csrf_token %}
-                        <b>Рейтинг:</b>
+                        <b>Rating:</b>
 
                         {# Скрытое поле с id фильма #}
                         <input type="hidden" value="{{ movie.id }}" name="movie">
 
                             <span class="rating">
-{# Здесь могли бы передать form.star и джанга сама бы отрендерила форму, но по своему шаблону виджета делает форму #}
-{# в которой получается список в который вложены поля. по  шаблону это не совсем подходит, поэтому вручную рендерим форму #}
                                 {% for k, v in star_form.fields.star.choices %} {# получам список звёзд в виде кортежа #}
-{# В slule_movie.CSS добавлено куча говна ".rating" #}
                                     <input id="rating {{ v }}" type="radio" name="star" value="{{ k }}">
                                     <label for="rating {{ v }}>{{ k }}">
                                     </label>
@@ -145,7 +136,7 @@
     <div class="row sub-para-w3layouts mt-5">
 
         <h3 class="shop-sing editContent" style="outline: none; cursor: inherit;">
-            О фильме {{ movie.title }}</h3>
+            About the movie "{{ movie.title }}"</h3>
         <p>
             {% for obj in movie.movieshots_set.all %}
             <img  src="{{ obj.image.url }}" style=" max-width: 250px; height: auto;" {# class=".img-movie-shots" #} alt="" {{ obj.description }}>
@@ -153,14 +144,12 @@
         </p>
 
         <p class="editContent" style="outline: none; cursor: inherit;">
-
-        {# Фильтр safe чтоб теги html от текстового редактора ckeditor рендерились, а не выводились как текст #}
             {{ movie.description|safe }}
         </p>
         <p class="mt-3 italic-blue editContent"
            style="outline: none; cursor: inherit;">
             <iframe width="560" height="315"
-                    src="https://www.youtube.com/embed/A36LahZNUiE?controls=0"
+                    src="{{ movie.trailer }}"
                     frameborder="0" allow="accelerometer; autoplay;
                                                            encrypted-media; gyroscope; picture-in-picture"
                     allowfullscreen>
@@ -174,18 +163,18 @@
             <!-- contact form grid -->
             <div class="contact-single">
                 <h3 class="editContent">
-                    <span class="sub-tittle editContent">{{ movie.reviews_set.count }}</span>Оставить отзыв</h3>
+{#                    <span class="sub-tittle editContent">{{ movie.reviews_set.count }}</span>Leave a review</h3>#}
+                    <span class="sub-tittle editContent"></span>Leave a review</h3>
 
 
                 <form action="{% url 'add-review' movie.id %}" method="post" class="mt-4" id="formReview"> {% csrf_token %}
 
-                    {# тип скрытый для поля ответов на коменты#}
                     <input type="hidden" name="parent" id="contactparent" value="">
 
                     <div class="form-group editContent">
 
                         <label for="contactcomment" class="editContent">
-                            Ваш комментарий *
+                            Your comment *
                         </label>
                             {{ form.text }}
 {#                        <textarea class="form-control border" rows="5" name="text"#}
@@ -195,7 +184,7 @@
                         <div class="col-sm-6 form-group p-0 editContent">
 
                             <label for="contactusername" class="editContent">
-                                Имя *
+                                Name *
                             </label>
                             {{ form.name }}
 {#                            <input type="text" class="form-control border"#}
@@ -213,7 +202,7 @@
                         {{ form.captcha }}
                         </div>
                         <button type="submit" class="mt-3 btn btn-success btn-block py-3">
-                            Отправить
+                            Send
                         </button>
                 </form>
 
@@ -243,8 +232,8 @@
             </p>
 
             {# Ссылка для ответа на коммент, formReview это наше id формы #}
-{# Функция addReview() написанная нами ниже в скрипте, вызовется по клику, будет передавать имя и id пользователя которому хотим ответить #}
-            <a href="#formReview" onclick="addReview( '{{ review.name }}', '{{ review.id }}' )">Ответить</a>
+{# Функция addReview() написанная ниже в скрипте, вызовется по клику, будет передавать имя и id пользователя которому хотим ответить #}
+            <a href="#formReview" onclick="addReview( '{{ review.name }}', '{{ review.id }}' )">Reply</a>
 
 {#----------------------------------------#}
 
@@ -276,29 +265,13 @@
 
 
     <script>
-     {# 1 - id будет подставляться в значение поля parent (name="parent" есть в инпуте) #}
-     {# 2 - а имя пользователя подставляться в наше поле сомого сообщения #}
-
     function addReview(name, id) {
-     {# 1 = находим на нашей странице по id наше поле parant (id="contactparent") #}
-     {# 1 = затем в атрибут value='' который там пустой, подставляем id который нам пришёл #}
         document.getElementById('contactparent').value = id;
-     {# 2 = затем так же по id находим поле отзыва id='contactcomment' и добавляем в него имя и запятую #}
         document.getElementById('contactcomment').innerText = name + ', '
     }
     </script>
 
 
-{#    <script>#}
-{#    $(document).ready(function addReview(name, id) {#}
-{#    $('#contactparent').value = id;#}
-{#    $('#contactcomment').innerText = name#}
-{#    })#}
-{#    </script>#}
-
-
 {% endblock movie %}
 
-
-{#$('#some-node-id').set....#}
 

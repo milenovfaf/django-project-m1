@@ -33,6 +33,7 @@ class Actor(models.Model):
     class Meta:
         verbose_name = 'Актёры и режиссёры'
         verbose_name_plural = 'Актёры и режиссёры'
+        default_related_name = 'genres'
 
 
 class Genre(models.Model):
@@ -47,16 +48,20 @@ class Genre(models.Model):
     class Meta:
         verbose_name = 'Жанр'
         verbose_name_plural = 'Жанры'
+        default_related_name = 'actors'
 
 
 class Movie(models.Model):
     """ Фильмы """
     title = models.CharField("Название", max_length=100)
-    tagline = models.CharField("Слоган", max_length=100, default='')
+    # tagline = models.CharField("Слоган", max_length=100, default='')
     description = models.TextField("Описание")
     poster = models.ImageField("Постер", upload_to="movies/")
     year = models.PositiveSmallIntegerField("Дата выхода", default=2019)
     country = models.CharField("Страна", max_length=30)
+    seasons = models.SmallIntegerField("Сезоны", default=0)
+    series = models.SmallIntegerField("Серии", default=0)
+    trailer = models.CharField("Трейлер", max_length=150, blank=True, null=True)
 
     directors = models.ManyToManyField(
         Actor,
@@ -71,14 +76,6 @@ class Movie(models.Model):
         verbose_name="жанры")
 
     world_premiere = models.DateField("Примьера в мире", default=date.today)
-    budget = models.PositiveIntegerField(
-        "Бюджет", default=0, help_text="указывать сумму в долларах")
-    fees_in_usa = models.PositiveIntegerField(
-        "Сборы в США", default=0, help_text="указывать сумму в долларах"
-    )
-    fess_in_world = models.PositiveIntegerField(
-        "Сборы в мире", default=0, help_text="указывать сумму в долларах"
-    )
     category = models.ForeignKey(
         Category,
         verbose_name="Категория",
@@ -86,7 +83,7 @@ class Movie(models.Model):
         null=True
     )
 
-    url = models.SlugField(max_length=130, unique=True)
+    url = models.SlugField(max_length=130, unique=True,)
     draft = models.BooleanField("Черновик", default=False)
 
     def __str__(self):
@@ -101,6 +98,9 @@ class Movie(models.Model):
     class Meta:
         verbose_name = "Фильм"
         verbose_name_plural = "Фильмы"
+        index_together = [
+            ["url", ],
+        ]
 
 
 class MovieShots(models.Model):
@@ -128,23 +128,22 @@ class RatingStar(models.Model):
 
     def __str__(self):
         return f'{self.value}'
-        # Преобразов в строку иначе выйдет ошибка при добавлении числа в админке
 
     class Meta:
         verbose_name = "Звезда рейтинга"
         verbose_name_plural = "Звезды рейтинга"
-        ordering = ["-value"]  # сортировка по полю чтоб звёзды от > к < отобр
+        ordering = ["-value"]  # Сортировка по полю, отображение звёзд от > к <
 
 
 class Rating(models.Model):
     """Рейтинг"""
-    ip = models.CharField("IP адрес", max_length=15)  # Кто добавил рейтинг
+    ip = models.CharField("IP адрес", max_length=15)
 
-    star = models.ForeignKey(  # привязка к значению звезды котор выбрал юзер
+    star = models.ForeignKey(
         RatingStar,
         on_delete=models.CASCADE,
         verbose_name="звезда")
-    movie = models.ForeignKey(  # Привязка к фильму которому добавили рейт
+    movie = models.ForeignKey(
         Movie,
         on_delete=models.CASCADE,
         verbose_name="фильм",
