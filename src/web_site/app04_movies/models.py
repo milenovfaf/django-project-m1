@@ -106,7 +106,11 @@ class Movie(models.Model):
 class MovieShots(models.Model):
     """Кадры из фильма"""
     title = models.CharField("Заголовок", max_length=100)
-    description = models.TextField("Описание")
+    # description = models.TextField(
+    #     "Описание",
+    #     blank=True,
+    #     null=True
+    # )
     image = models.ImageField("Изображение", upload_to="movie_shots/")
 
     movie = models.ForeignKey(

@@ -1,21 +1,24 @@
 {% extends 'base.html' %}
 {% block content %}
 {#" Этот кусок общий для двух шаблонов list и detail поэтому он находится здесь #}
-        <section class="ab-info-main py-md-5 py-4 editContent" style="padding-left: 3rem; padding-right: 3rem;">
+        <section class="ab-info-main py-md-5 py-5 editContent" style="padding-left: 3rem; padding-right: 3rem;">
 
             {% block conteiner %} {# класс этого блока нужно менять на странице deteil, поэтому пихаем в контейнер, потому что sidebar смещается#}
                 <div class="container-fluid py-md-3">
             {% endblock conteiner %}
 
                     <div class="row">
+                    {% block offset %}
+                    <div class="smd col-lg-1">
+                    {% endblock offset %}
 
-                        {% block sidebar %} {# На странице detail меняем класс 3 на 4 так как там меняется размер #}
-                            <div class="side-bar col-lg-3"> {# Див сайдбара вынесли сюда, чтоб менять его размер #}
+                    </div>
+                        {% block sidebar %} {# На странице detail меняем класс 2 на 4 так как там меняется размер #}
+                            <div class="side-bar col-lg-2"> {# Див сайдбара вынесли сюда, чтоб менять его размер #}
                         {% endblock sidebar %}
 
                             {% include 'include/sidebar.html' %}
-
-                            </div>
+                        </div>
                                 {% block movie %}
                                 {% endblock movie %}
                     </div>

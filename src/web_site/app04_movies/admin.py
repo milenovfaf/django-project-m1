@@ -7,8 +7,8 @@ from .models import \
 
 from ckeditor_uploader.widgets import CKEditorUploadingWidget
 
-admin.site.site_title = 'Админка'
-admin.site.site_header = 'Админка'
+admin.site.site_title = 'Django administration '
+admin.site.site_header = 'Django administration '
 
 
 class MovieAdminForm(forms.ModelForm):

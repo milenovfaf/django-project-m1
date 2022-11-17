@@ -77,10 +77,17 @@ SITE_DIR = os.environ.get(
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
+
+
+# HEROKU_APP_NAME =
+# HEROKU_API_KEY = <your account API key>
+# HEROKU_APP_HOST = <your host url>
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = bool(os.environ.get('DEBUG', 'False') == 'True')
 
-ALLOWED_HOSTS = []
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+ALLOWED_HOSTS = ['django-project-m1-master.herokuapp.com', '127.0.0.1']
 
 _allowed_hosts = os.environ.get('ALLOWED_HOSTS', '').lower()
 if _allowed_hosts:
@@ -127,6 +134,9 @@ INTERNAL_IPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+
+    'whitenoise.middleware.WhiteNoiseMiddleware',
+
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -185,8 +195,10 @@ DATABASES = {
         'USER':         os.environ.get('DB_USER',       'postgres'),
         'PASSWORD':     os.environ.get('DB_PASSWORD',   'postgres'),
         'HOST':         os.environ.get('DB_HOST',       'localhost'),
+        'PORT':         os.environ.get('DB_PORT',       '5432'),
     }
 }
+
 
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
@@ -319,6 +331,8 @@ LOGGING = {
 # ------------------------------------------------------------------------------
 SITE_ID = 1
 
-
+import dj_database_url
+prod_db=dj_database_url.config(conn_max_age=500)
+DATABASES['default'].update(prod_db)
 
 
