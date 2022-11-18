@@ -77,12 +77,6 @@ SITE_DIR = os.environ.get(
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
-
-
-# HEROKU_APP_NAME =
-# HEROKU_API_KEY = <your account API key>
-# HEROKU_APP_HOST = <your host url>
-
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = bool(os.environ.get('DEBUG', 'False') == 'True')
 
