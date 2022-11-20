@@ -71,7 +71,7 @@ let html = '\
                 </h4>\
                 <div class="product_price">\
                     <div class="grid-price">\
-                        <span class="money editContent">{{ tagline }}</span>\
+                        <span class="money editContent"></span>\
                     </div>\
                 </div>\
                 <ul class="stars">\
@@ -93,6 +93,9 @@ $( document ).ready(function() {
     // Добавление звёзд рейтинга
     // С помощью querySelector ищем форму с именем rating
     const rating = document.querySelector('form[name=rating]');
+    if (!rating) {
+        return;
+    }
     // Тогда у этой формы вызовится событие change
     rating.addEventListener('change', function () {
         // Получаем данные из формы

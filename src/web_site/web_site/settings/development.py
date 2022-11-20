@@ -24,6 +24,8 @@ if not os.path.exists(STATIC_ROOT):
 if not os.path.exists(MEDIA_ROOT):
     os.mkdir(MEDIA_ROOT)
 #
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'mediafiles') # HEROKUЫ
 if not os.path.exists(LOG_DIR):
     os.mkdir(LOG_DIR)
 #
