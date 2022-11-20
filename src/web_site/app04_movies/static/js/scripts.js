@@ -109,3 +109,4 @@ $( document ).ready(function() {
             .catch(error => alert('Ошибка'))
     });
 });
+
