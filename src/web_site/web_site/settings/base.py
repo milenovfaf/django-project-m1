@@ -80,8 +80,11 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = bool(os.environ.get('DEBUG', 'False') == 'True')
 
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 ALLOWED_HOSTS = ['django-project-m1-master.herokuapp.com', '127.0.0.1']
+
 
 _allowed_hosts = os.environ.get('ALLOWED_HOSTS', '').lower()
 if _allowed_hosts:
@@ -182,17 +185,16 @@ TEMPLATES = [
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
 DATABASES = {
-    # docker run -d --name pg_movies_20220824 -e POSTGRES_PASSWORD=postgres -p 127.0.0.1:5432:5432 postgres
     'default': {
+        # docker run -d --name dj_zum -e POSTGRES_PASSWORD=postgres -p 0.0.0.0:15432:5432  postgres
         'ENGINE':       'django.db.backends.postgresql_psycopg2',
         'NAME':         os.environ.get('DB_NAME',       'postgres'),
         'USER':         os.environ.get('DB_USER',       'postgres'),
         'PASSWORD':     os.environ.get('DB_PASSWORD',   'postgres'),
         'HOST':         os.environ.get('DB_HOST',       'localhost'),
-        'PORT':         os.environ.get('DB_PORT',       '5432'),
+        'PORT':         os.environ.get('DB_PORT',        '5432'),
     }
 }
-
 
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
