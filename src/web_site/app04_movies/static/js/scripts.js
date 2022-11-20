@@ -87,21 +87,25 @@ let html = '\
 {{/movies}}'  // Закрывам цикл
 
 
-// Добавление звёзд рейтинга
-// С помощью querySelector ищем форму с именем rating
-const rating = document.querySelector('form[name=rating]');
-// Тогда у этой формы вызовится событие change
-rating.addEventListener('change', function () {
-    // Получаем данные из формы
-    // Создавая FormData и передав форму мы получаем значения всех полей
-    let data = new FormData(this);
-    // На url из нашей формы будем отправлять post запрос передавая в теле (body) нашу data
-    // ПИЗДЕЦ где `${this.action}` не кавычки одинарные а апострафы, ЕБАНУТЬСЯ
-    fetch(`${this.action}`, {
-        method: 'POST',
-        body: data
-    })
-        // при успешном или нет ответе появится соответствующее соббщение
-        .then(response => alert('Рейтинг установлен'))
-        .catch(error => alert('Ошибка'))
+
+
+$( document ).ready(function() {
+    // Добавление звёзд рейтинга
+    // С помощью querySelector ищем форму с именем rating
+    const rating = document.querySelector('form[name=rating]');
+    // Тогда у этой формы вызовится событие change
+    rating.addEventListener('change', function () {
+        // Получаем данные из формы
+        // Создавая FormData и передав форму мы получаем значения всех полей
+        let data = new FormData(this);
+        // На url из нашей формы будем отправлять post запрос передавая в теле (body) нашу data
+        // ПИЗДЕЦ где `${this.action}` не кавычки одинарные а апострафы, ЕБАНУТЬСЯ
+        fetch(`${this.action}`, {
+            method: 'POST',
+            body: data
+        })
+            // при успешном или нет ответе появится соответствующее соббщение
+            .then(response => alert('Рейтинг установлен'))
+            .catch(error => alert('Ошибка'))
+    });
 });

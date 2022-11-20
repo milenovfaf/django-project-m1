@@ -83,7 +83,7 @@ DEBUG = bool(os.environ.get('DEBUG', 'False') == 'True')
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-ALLOWED_HOSTS = ['django-project-m1-master.herokuapp.com']
+ALLOWED_HOSTS = ['*']
 
 
 _allowed_hosts = os.environ.get('ALLOWED_HOSTS', '').lower()
