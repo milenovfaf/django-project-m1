@@ -259,7 +259,7 @@ STATIC_URL = '/static/'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 STATIC_ROOT = os.environ.get('STATIC_ROOT', os.path.join(SITE_DIR, 'static'))
 # https://stackoverflow.com/questions/7456817/django-when-should-i-use-media-root-or-static-root
-MEDIA_ROOT = os.path.join(SITE_DIR, 'media')
+# MEDIA_ROOT = os.path.join(SITE_DIR, 'media')
 STATICFILES_FINDERS = (
     # http://djbook.ru/examples/33/
     'django.contrib.staticfiles.finders.FileSystemFinder',
