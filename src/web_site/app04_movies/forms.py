@@ -1,17 +1,15 @@
 # from django.forms import ModelForm, TextInput
 from django import forms
-from snowpenguin.django.recaptcha3.fields import ReCaptchaField
 
 from .models import Reviews, RatingStar, Rating
 
 
 class ReviewsForm(forms.ModelForm):
     """ Форма отзывов """
-    captcha = ReCaptchaField()  # Добавим поле капча и в Meta>fields отобразим
 
     class Meta:
         model = Reviews
-        fields = ('name', 'email', 'text', 'captcha')
+        fields = ('name', 'email', 'text')
         widgets = {
             'name': forms.TextInput(attrs={
                 'class': 'form-control border'
@@ -22,7 +20,6 @@ class ReviewsForm(forms.ModelForm):
             'text': forms.Textarea(attrs={
                 'class': 'form-control border'
             }),
-
         }
 
 

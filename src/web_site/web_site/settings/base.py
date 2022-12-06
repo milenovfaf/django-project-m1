@@ -112,8 +112,6 @@ INSTALLED_APPS = [
 
     'ckeditor_uploader',
     'ckeditor',
-    'snowpenguin.django.recaptcha3',
-    ''
     
 
     'allauth',

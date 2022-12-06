@@ -1031,7 +1031,8 @@ h3.sear-head {
     transition: all .2s ease-in-out;
     font-family: Roboto, sans-serif;
     font-size: 16px;
-    color: #6163b9
+    color: #28A745
+    /*color: #6163b9*/
 }
 
 @media only screen and (max-width: 767px) {
@@ -1042,13 +1043,15 @@ h3.sear-head {
 
 @media only screen and (min-width: 1025px) {
     .pagination a.pagination__link {
-        background: rgb(191, 192, 241)
+        background: rgb(191, 241, 200)
+        /*background: rgb(191, 192, 241)*/
     }
 }
 
 @media only screen and (min-width: 1025px) {
     .pagination a.pagination__link:hover {
-        background: rgb(102, 88, 175)
+        background: rgb(88, 175, 102)
+        /*background: rgb(102, 88, 175)*/
     }
 }
 
@@ -1097,18 +1100,21 @@ h3.sear-head {
     .pagination__item.active:hover
     .pagination__link {
         color: #fff;
-        background: #6658af
+        background: #28A745
+        /*background: #6658af*/
     }
 }
 
 .pagination__item.active .pagination__link {
     color: #fff;
-    background: #6658af
+    background: #28A745
+    /*background: #6658af*/
 }
 
 .pagination__item--dots .pagination__link {
     /*color: #bfc0f1;*/
-    color: #6658af
+    color: #28A745
+    /*color: #6658af*/
 
 }
 

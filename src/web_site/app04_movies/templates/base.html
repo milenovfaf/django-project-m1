@@ -1,4 +1,4 @@
-{% load static recaptcha3 %}
+{% load static %}
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -24,8 +24,6 @@
 			  integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ="
 			  crossorigin="anonymous"></script>
     <!-- //Fonts -->
-    {% recaptcha_init %}
-    {% recaptcha_ready action_name='homepage' %}
 
 {% block head_css %}
 
