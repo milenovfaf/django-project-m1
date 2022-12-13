@@ -1,8 +1,9 @@
 from django.db.models import Q
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseNotFound, Http404
+from django.template import RequestContext, loader, Context
 from django.views.generic import ListView, DetailView
-from django.views.generic.base import View
-from django.shortcuts import redirect
+from django.views.generic.base import View, TemplateView
+from django.shortcuts import redirect, render
 
 from .models import Genre, Movie, Actor, Rating
 from .forms import ReviewsForm, RatingForm
@@ -127,3 +128,15 @@ class Search(ListView):
         context = super().get_context_data(*args, **kwargs)
         context['search'] = f'search={self.request.GET.get("search")}&'
         return context
+    #
+
+
+
+
+# def page_not_found_error(request,exception):
+#     return render(request, 'pages/404.html',context={'error':'Доступ неверный: не существует'}, status=404)
+#
+# def page_error(request):
+#     return render(request, 'pages/404.html',context={'error':'Доступ неверный: ошибка сервера'}, status=500)
+
+

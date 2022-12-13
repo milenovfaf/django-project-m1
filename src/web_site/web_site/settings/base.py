@@ -81,7 +81,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 DEBUG = bool(os.environ.get('DEBUG', 'False') == 'True')
 
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_ROOT = os.environ.get('STATIC_ROOT', os.path.join(SITE_DIR, 'static'))
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 ALLOWED_HOSTS = ['*']
 
@@ -96,11 +96,14 @@ if _allowed_hosts:
 
 # Application definition
 INSTALLED_APPS = [
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+
+    'app_common',  # runserver disable check migrations for dockerfile
     'django.contrib.staticfiles',
 
     'debug_toolbar',
@@ -184,7 +187,7 @@ TEMPLATES = [
 
 DATABASES = {
     'default': {
-        # docker run -d --name dj_zum -e POSTGRES_PASSWORD=postgres -p 0.0.0.0:15432:5432  postgres
+        # docker run -d --name pg_dj_zum -e POSTGRES_PASSWORD=postgres -p 0.0.0.0:15432:5432  postgres
         'ENGINE':       'django.db.backends.postgresql_psycopg2',
         'NAME':         os.environ.get('DB_NAME',       'postgres'),
         'USER':         os.environ.get('DB_USER',       'postgres'),
@@ -257,7 +260,7 @@ STATIC_URL = '/static/'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 STATIC_ROOT = os.environ.get('STATIC_ROOT', os.path.join(SITE_DIR, 'static'))
 # https://stackoverflow.com/questions/7456817/django-when-should-i-use-media-root-or-static-root
-# MEDIA_ROOT = os.path.join(SITE_DIR, 'media')
+MEDIA_ROOT = os.path.join(SITE_DIR, 'media')
 STATICFILES_FINDERS = (
     # http://djbook.ru/examples/33/
     'django.contrib.staticfiles.finders.FileSystemFinder',
@@ -330,3 +333,4 @@ SITE_ID = 1
 # DATABASES['default'].update(prod_db)
 
 
+print('USING BASE SETTINGS!')

@@ -16,6 +16,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
+# from app04_movies.views import page_not_found_error, page_error
+
 urlpatterns = [
     path('admin/',                  admin.site.urls),
     path('accounts/',               include('allauth.urls')),
@@ -26,3 +28,5 @@ urlpatterns = [
     path('__debug__/',             include('debug_toolbar.urls')),
 ]
 
+# handler404 = page_not_found_error
+# handler500 = page_error

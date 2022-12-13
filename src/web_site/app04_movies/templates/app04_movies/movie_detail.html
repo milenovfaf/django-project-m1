@@ -85,6 +85,8 @@
                 <li style="list-style: none">
                     <span><b>Series:</b> {{ movie.series }}</span>
                 </li>
+
+
                 <li>
                     <form action="{% url 'add-rating' %}" method="post" name="rating">
                         {% csrf_token %}
@@ -100,7 +102,9 @@
                                     </label>
                                 {% endfor %}
                            </span>
+{#                        <span class="editContent">4.0</span>#}
                     </form>
+
                 </li>
 
 
@@ -275,7 +279,5 @@
     }
     </script>
 
-
 {% endblock movie %}
-
 

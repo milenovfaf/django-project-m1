@@ -21,9 +21,9 @@ if not os.path.exists(SITE_DIR):
 if not os.path.exists(STATIC_ROOT):
     os.mkdir(STATIC_ROOT)
 #
-# if not os.path.exists(MEDIA_ROOT):
-#     os.mkdir(MEDIA_ROOT)
-#
+if not os.path.exists(MEDIA_ROOT):
+    os.mkdir(MEDIA_ROOT)
+
 
 # MEDIA_ROOT = os.path.join(BASE_DIR, 'mediafiles') # HEROKUЫ
 if not os.path.exists(LOG_DIR):
@@ -77,6 +77,7 @@ DATABASES = {
 ROOT_URLCONF = 'web_site.urls_dev'
 # ------------------------------------------------------------------------------
 
+print('USING DEVELOPMENT SETTINGS!')
 
 _KB = 1024
 _MB = _KB * 1024
