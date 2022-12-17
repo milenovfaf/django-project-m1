@@ -1,5 +1,11 @@
 {% extends 'app04_movies/base.html' %}
-{% block header %} bg1 {% endblock header %}
+{% load static %}
+
+{% block header %}
+    <img src="{% static 'single-post-pic.jpg' %}"  style="width: 100%;" />
+{% endblock header %}
+
+
 {% block movie %}
 
     <div class="left-ads-display col-lg-8">

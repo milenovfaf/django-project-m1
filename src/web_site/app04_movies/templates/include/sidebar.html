@@ -3,7 +3,7 @@
 <div class="search-bar w3layouts-newsletter">
     <h3 class="sear-head editContent" >Search</h3>
     <form action="{% url 'search-link' %}" method="get" class="d-flex editContent" >
-        <input type="search" placeholder="Enter a name..." name="search" class="form-control" required="">
+        <input type="search" placeholder="Enter a name..." name="search" class="form-control" required="" value="{{ request.GET.search }}">
         <button type="submit" class="btn1 btn" ><span class="fa fa-search" aria-hidden="true" ></span></button>
     </form>
 </div>

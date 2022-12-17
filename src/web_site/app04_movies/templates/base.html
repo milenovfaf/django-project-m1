@@ -35,8 +35,17 @@
 
         {# Выносим сюда див хедера чтоб менять класс и отображать разный банер на назных страницах #}
         {# Класс bg1 вытащили и поместили в movie_list #}
-        <div class="main-banner bg {% block header %} {# bg1 #} {% endblock header %}" id="home">
-            {% include 'include/header.html' %}
+        <div class="bg " id="home">
+            <div style="position: absolute; width: 100%">
+                {% include 'include/header.html' %}
+            </div>
+
+        <div style="max-height: 800px; overflow: hidden">
+            {% block header %}
+                <img src="{% static 'images/banner.jpg' %}" style="width: 100%;"  />
+            {% endblock header %}
+        </div>
+
         </div>
 
         <!-- Хлебные крошки -->
@@ -58,4 +67,3 @@
 <script src="{% static 'js/scripts.js' %}"></script>
 </body>
 </html>
-op

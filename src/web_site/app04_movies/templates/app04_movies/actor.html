@@ -21,9 +21,9 @@
             <h3 class="editContent">
                 {{ movie.title }}
             </h3>
-            <h5 class="editContent">
-
-            </h5>
+                <h3 class="shop-sing editContent">
+                    {{ actor.name }}
+                </h3>
             <ul>
                 <li>
                     <span>
@@ -36,26 +36,31 @@
                 <li>
                     <span>
                         <b>
-                            Director:
+                            Film Director:
                         </b>
-
+                        {% for movie in actor.film_director.all %}
+                            <a href="{{ movie.get_absolute_url }}">
+                                {{ movie.title }}
+                            </a>
+                            {% if not forloop.last %}
+                                <b>, </b>
+                            {% endif %}
+                        {% endfor %}
 {# Для того чтобы отобразить в каких фильмах режисёр или актёр нужно использовать related_name из модели Movie #}
 {# Чтобы сослаться на таблицу MtM это film_actor и film_director #}
-
-                        {% for movie in actor.film_director.all %}
-                            {{ movie.title }}
-                        {% endfor %}
-
                     </span>
                 </li>
                 <li>
                     <span>
-                        <b>Actor:</b>
-
+                        <b>Actor in films:</b>
                         {% for movie in actor.film_actor.all %}
-                            {{ movie.title }}
+                            <a href="{{ movie.get_absolute_url }}">
+                                {{ movie.title }}
+                            </a>
+                            {% if not forloop.last %}
+                                <b>, </b>
+                            {% endif %}
                         {% endfor %}
-
                     </span>
                 </li>
             </ul>

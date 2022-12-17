@@ -24,10 +24,8 @@
                         <li><a href="/">{{ category.name }}</a></li>
                         {% endfor %}
                     </ul>
-
                 </li>
                 <li>
-
                     {% if user.is_authenticated %}
                         <span style="color: rgb(255, 255, 255); font-weight: 700;">
                             {{ user.username }}
@@ -57,7 +55,9 @@
 <!--/banner-->
 <div class="banner-info">
     <p class="editContent" >Website on django 3</p>
-    <h3 class="mb-4 editContent">TV Series</h3>
+        <a href="/">
+            <h3 class="mb-4 editContent">TV Series</h3>
+        </a>
     <div class="ban-buttons">
     </div>
 </div>

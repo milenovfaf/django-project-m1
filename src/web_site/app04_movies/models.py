@@ -63,6 +63,10 @@ class Movie(models.Model):
     series = models.SmallIntegerField("Серии", default=0)
     trailer = models.CharField("Трейлер", max_length=150, blank=True, null=True)
 
+    @property
+    def trailer_url(self):
+        return self.trailer.replace('watch?v=', 'embed/')
+
     directors = models.ManyToManyField(
         Actor,
         verbose_name="режиссер",

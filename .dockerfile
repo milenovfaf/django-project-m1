@@ -9,7 +9,7 @@ echo "[global] \ntrusted-host =  pypi.douban.com \nindex-url = http://pypi.douba
 
 WORKDIR /app/src
 
-COPY ./src/web_site/        /app/src
+COPY ./src/web_site/             /app/src
 COPY ./requirements.txt     /app/src/requirements.txt
 
 
@@ -19,10 +19,7 @@ ENV DJANGO_SETTINGS_MODULE='web_site.settings.development'
 
 RUN mkdir -p /app/data
 ENV SITE_DIR='/app/data'
-
-#ENV  POSTGRES_HOST_AUTH_METHOD="trust"
-RUN  python manage.py collectstatic --noinput
-
+# collectstatic после runtime volume
 
 EXPOSE 8001
 CMD [ "python3", "manage.py", "runserver", "0.0.0.0:8001"]
