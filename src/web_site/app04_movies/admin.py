@@ -7,6 +7,8 @@ from .models import \
 
 from ckeditor_uploader.widgets import CKEditorUploadingWidget
 
+from utils.django_admin import ModelAdmin, ForeignKeyChoicesLimitAdminMixin
+
 admin.site.site_title = 'Django administration '
 admin.site.site_header = 'Django administration '
 
@@ -23,18 +25,30 @@ class MovieAdminForm(forms.ModelForm):
 
 
 @admin.register(Category)
-class CategoryAdmin(admin.ModelAdmin):
+class CategoryAdmin(ModelAdmin):
     """ Категории """
     list_display = ('id', 'name', 'url')
     list_display_links = ('name',)
+    search_fields = (
+        'name',
+        'description',
+        'url',
+    )
 
 
-class ReviewInline(admin.TabularInline):
-    """ Отзывы на странице фильма """
+class ReviewInline(
+    ForeignKeyChoicesLimitAdminMixin,
+    admin.TabularInline,
+):
+    """
+        Отзывы на странице фильма
+        При открытии записи фильма видем дополнительно все отзывы к нему
+    """
     model = Reviews
     readonly_fields = ('name', 'email')
     extra = 1
-    """ При открытии записи фильма видем дополнительно все отзывы к нему """
+
+    # search_fields - django использует из ReviewsAdmin для autocomplete_fields
 
 
 class MovieShotsInline(admin.TabularInline):
@@ -52,11 +66,15 @@ class MovieShotsInline(admin.TabularInline):
 
 
 @admin.register(Movie)
-class MovieAdmin(admin.ModelAdmin):
+class MovieAdmin(ModelAdmin):
     """ Фильмы """
     list_display = ('title', 'category', 'url', 'draft')
     list_filter = ('category', 'year')
-    search_fields = ('title', 'category__name')
+    search_fields = (
+        'title',
+        'description',
+        'category__name'
+    )
     inlines = [MovieShotsInline, ReviewInline]
     save_on_top = True
     save_as = True
@@ -117,20 +135,25 @@ class MovieAdmin(admin.ModelAdmin):
 
 
 @admin.register(Reviews)
-class ReviewsAdmin(admin.ModelAdmin):
+class ReviewsAdmin(ModelAdmin):
     """ Отзывы """
     list_display = ('name', 'email', 'parent', 'movie', 'id')
     readonly_fields = ('name', 'email')
+    search_fields = (
+        'email',
+        'name',
+        'text',
+    )
 
 
 @admin.register(Genre)
-class GenreAdmin(admin.ModelAdmin):
+class GenreAdmin(ModelAdmin):
     """ Жанры """
     list_display = ('name', 'url')
 
 
 @admin.register(Actor)
-class ActorAdmin(admin.ModelAdmin):
+class ActorAdmin(ModelAdmin):
     """ Актёры """
     list_display = ('name', 'age', 'get_image')
     readonly_fields = ('get_image',)
@@ -142,19 +165,27 @@ class ActorAdmin(admin.ModelAdmin):
 
 
 @admin.register(Rating)
-class RatingAdmin(admin.ModelAdmin):
+class RatingAdmin(ModelAdmin):
     """ Рейтинг """
     list_display = ('star', 'movie', 'ip')
+    search_fields = (
+        'ip',
+        'movie__title',
+        'movie__description',
+    )
 
 
 @admin.register(RatingStar)
-class RatingStarAdmin(admin.ModelAdmin):
+class RatingStarAdmin(ModelAdmin):
     """ Звезда рейтинга """
     list_display = ('value',)
+    search_fields = (
+        'value',
+    )
 
 
 @admin.register(MovieShots)
-class MovieShotsAdmin(admin.ModelAdmin):
+class MovieShotsAdmin(ModelAdmin):
     """ Кадры из фильма """
     list_display = ('title', 'image', 'get_image')
     readonly_fields = ('get_image',)
